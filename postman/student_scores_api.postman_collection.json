@@ -1,376 +1,246 @@
 {
   "info": {
+    "_postman_id": "b7f1c2a4-9d3e-4a6b-8c1f-2e5a7d9b0c31",
     "name": "Student Scores API",
-    "_postman_id": "b7c1f2a4-9d3e-4c5b-8a61-2f0e7d4c9b13",
-    "description": "FastAPI service for managing subjects, assessments, and student scores.\n\nStart the server first:\n  uvicorn app.main:app --reload\n\nWrite requests (POST/PUT) inherit Basic Auth from the collection (username `admin`, password `changeme123`). Read requests (GET) are set to No Auth. IDs are stored as collection variables and can be filled in after creating each resource.",
+    "description": "Collection for the Student Scores API. Write requests (POST/PUT) use HTTP Basic Auth with username admin and password changeme123.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
     "type": "basic",
-    "basic": [
-      {
-        "key": "username",
-        "value": "{{username}}",
-        "type": "string"
-      },
-      {
-        "key": "password",
-        "value": "{{password}}",
-        "type": "string"
-      }
-    ]
+    "basic": {
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://127.0.0.1:8000"
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
     },
     {
       "key": "username",
-      "value": "admin"
+      "value": "admin",
+      "type": "string"
     },
     {
       "key": "password",
-      "value": "changeme123"
-    },
-    {
-      "key": "subject_id",
-      "value": "1"
-    },
-    {
-      "key": "assessment_id",
-      "value": "1"
-    },
-    {
-      "key": "score_id",
-      "value": "1"
-    },
-    {
-      "key": "student_name",
-      "value": "Ada Lovelace"
+      "value": "changeme123",
+      "type": "string"
     }
   ],
   "item": [
     {
-      "name": "Subjects",
-      "item": [
-        {
-          "name": "Create subject",
-          "event": [],
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{username}}",
-                  "type": "string"
-                },
-                {
-                  "key": "password",
-                  "value": "{{password}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Mathematics\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/subjects/",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "subjects",
-                ""
-              ]
-            },
-            "description": "Create a subject. Requires Basic Auth. Returns 201 with the created subject and its server-assigned subject_id."
-          },
-          "response": []
+      "name": "Create subject",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "{{username}}",
+            "password": "{{password}}"
+          }
         },
-        {
-          "name": "List subjects",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/subjects/",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "subjects",
-                ""
-              ]
-            },
-            "description": "List all subjects. No auth required."
-          },
-          "response": []
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Mathematics\"\n}"
         },
-        {
-          "name": "Get subject by id",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/subjects/{{subject_id}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "subjects",
-                "{{subject_id}}"
-              ]
-            },
-            "description": "Fetch one subject. Returns 404 if the id does not exist. No auth required."
-          },
-          "response": []
-        }
-      ]
+        "url": {
+          "raw": "{{baseUrl}}/subjects/",
+          "host": ["{{baseUrl}}"],
+          "path": ["subjects", ""]
+        },
+        "description": "Create a subject. Requires auth. Returns 201."
+      }
     },
     {
-      "name": "Assessments",
-      "item": [
-        {
-          "name": "Create assessment",
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{username}}",
-                  "type": "string"
-                },
-                {
-                  "key": "password",
-                  "value": "{{password}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"subject_id\": {{subject_id}},\n  \"name\": \"Midterm Exam\",\n  \"max_score\": 100\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/assessments/",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "assessments",
-                ""
-              ]
-            },
-            "description": "Create an assessment under an existing subject. Requires Basic Auth. Returns 404 if subject_id does not exist."
-          },
-          "response": []
+      "name": "List subjects",
+      "request": {
+        "auth": {
+          "type": "noauth"
         },
-        {
-          "name": "List assessments",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/assessments/",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "assessments",
-                ""
-              ]
-            },
-            "description": "List all assessments. No auth required."
-          },
-          "response": []
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/subjects/",
+          "host": ["{{baseUrl}}"],
+          "path": ["subjects", ""]
         },
-        {
-          "name": "Get assessment by id",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/assessments/{{assessment_id}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "assessments",
-                "{{assessment_id}}"
-              ]
-            },
-            "description": "Fetch one assessment. Returns 404 if the id does not exist. No auth required."
-          },
-          "response": []
-        }
-      ]
+        "description": "List all subjects. No auth required. Returns 200."
+      }
     },
     {
-      "name": "Scores",
-      "item": [
-        {
-          "name": "Add score",
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{username}}",
-                  "type": "string"
-                },
-                {
-                  "key": "password",
-                  "value": "{{password}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"student_name\": \"Ada Lovelace\",\n  \"assessment_id\": {{assessment_id}},\n  \"value\": 80\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/scores",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "scores"
-              ]
-            },
-            "description": "Record a student's score on an assessment. Requires Basic Auth. Returns 404 if the assessment does not exist, 400 if value exceeds the assessment's max_score."
-          },
-          "response": []
+      "name": "Get subject by ID",
+      "request": {
+        "auth": {
+          "type": "noauth"
         },
-        {
-          "name": "Update score",
-          "request": {
-            "auth": {
-              "type": "basic",
-              "basic": [
-                {
-                  "key": "username",
-                  "value": "{{username}}",
-                  "type": "string"
-                },
-                {
-                  "key": "password",
-                  "value": "{{password}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"value\": 95\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/scores/{{score_id}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "scores",
-                "{{score_id}}"
-              ]
-            },
-            "description": "Update an existing score's value. Requires Basic Auth. Returns 404 if the score does not exist, 400 if value exceeds the assessment's max_score."
-          },
-          "response": []
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/subjects/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["subjects", "1"]
         },
-        {
-          "name": "Get student results",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/students/{{student_name}}/results",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "students",
-                "{{student_name}}",
-                "results"
-              ]
-            },
-            "description": "Retrieve all scores for a student. Returns 404 if the student has no scores. No auth required."
-          },
-          "response": []
+        "description": "Get a single subject. No auth required. Returns 200 or 404."
+      }
+    },
+    {
+      "name": "Create assessment",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "{{username}}",
+            "password": "{{password}}"
+          }
         },
-        {
-          "name": "Get student average",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/students/{{student_name}}/average",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "students",
-                "{{student_name}}",
-                "average"
-              ]
-            },
-            "description": "Calculate a student's average score across all assessments. Returns 404 if the student has no scores. No auth required."
-          },
-          "response": []
-        }
-      ]
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject_id\": 1,\n  \"name\": \"Midterm Exam\",\n  \"max_score\": 100\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/assessments/",
+          "host": ["{{baseUrl}}"],
+          "path": ["assessments", ""]
+        },
+        "description": "Create an assessment under an existing subject. Requires auth. Returns 201, or 404 if the subject does not exist."
+      }
+    },
+    {
+      "name": "List assessments",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/assessments/",
+          "host": ["{{baseUrl}}"],
+          "path": ["assessments", ""]
+        },
+        "description": "List all assessments. No auth required. Returns 200."
+      }
+    },
+    {
+      "name": "Get assessment by ID",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/assessments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["assessments", "1"]
+        },
+        "description": "Get a single assessment. No auth required. Returns 200 or 404."
+      }
+    },
+    {
+      "name": "Add score",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "{{username}}",
+            "password": "{{password}}"
+          }
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"student_name\": \"Ada Lovelace\",\n  \"assessment_id\": 1,\n  \"value\": 80\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/scores",
+          "host": ["{{baseUrl}}"],
+          "path": ["scores"]
+        },
+        "description": "Add a score for a student on an assessment. Requires auth. Returns 201, 404 if the assessment does not exist, or 400 if the value exceeds max_score."
+      }
+    },
+    {
+      "name": "Update score",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": {
+            "username": "{{username}}",
+            "password": "{{password}}"
+          }
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"value\": 95\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/scores/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["scores", "1"]
+        },
+        "description": "Update an existing score. Requires auth. Returns 200, 404 if the score does not exist, or 400 if the value exceeds max_score."
+      }
+    },
+    {
+      "name": "Get student results",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/Ada%20Lovelace/results",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "Ada Lovelace", "results"]
+        },
+        "description": "Get all scores for a student. No auth required. Returns 200 or 404 if the student has no results."
+      }
+    },
+    {
+      "name": "Get student average",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/students/Ada%20Lovelace/average",
+          "host": ["{{baseUrl}}"],
+          "path": ["students", "Ada Lovelace", "average"]
+        },
+        "description": "Get a student's average score. No auth required. Returns 200 or 404 if the student has no results."
+      }
     }
   ]
 }
